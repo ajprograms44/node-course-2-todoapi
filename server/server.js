@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const {ObjectID} = require('mongodb')
 //Libraries
 
 var {mongoose} = require('./db/mongoose.js')
@@ -37,7 +38,26 @@ app.get('/todos', (req, res) => {
     });
 });
 
+app.get('/todos/:id', (req, res) => {
+//':id' is a URL parameter that we can use in the url to indentify each todo
+    var id = req.params.id
+    //This is how we reference the id we want 
+    if (!ObjectID.isValid(id)) {
+        return res.status(404).send();
+        //We use return so the function can finish here
+    }
 
+    Todo.findById(id).then((todo) => {
+        if (!todo) {
+            res.status(404).send();
+        }
+        res.send({todo});
+    }).catch((e) => {
+        res.status(400).send();
+    })
+
+
+})
 
 app.listen(3000, () => {console.log('Started on port 3000')});
 //Starting up app and setting it to listen on port 3000
