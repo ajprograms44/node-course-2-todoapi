@@ -34,8 +34,10 @@ app.get('/todos', (req, res) => {
         //send todos in an object back so we can atatch properties later
     }, (e) => {
         res.status(400).send(e);
-    })
-})
+    });
+});
+
+
 
 app.listen(3000, () => {console.log('Started on port 3000')});
 //Starting up app and setting it to listen on port 3000
