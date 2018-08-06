@@ -1,3 +1,6 @@
+require('./config/config')
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const {ObjectID} = require('mongodb');
@@ -11,7 +14,7 @@ var {User} = require('./models/user')
 
 
 var app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
@@ -90,7 +93,7 @@ app.patch('/todos/:id', (req, res) => {
     //We use the '_.pick' method to pull out just the fields we want users to be able to edit
     //First argument is what we want to edit, in this case the request body
     //Second argument is an array of what we want users to be able to edit
-    
+
     if (!ObjectID.isValid(id)) {
         return res.status(404).send();
         //We use return so the function can finish here
