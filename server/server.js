@@ -32,7 +32,7 @@ app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
     //use .find() to fetch all of the todos in the collection and then do something with them
     //the .then() call to take two functions: the success case function and the reject case function
-        res.send({todos})
+        res.send({todos: todos})
         //send todos in an object back so we can atatch properties later
     }, (e) => {
         res.status(400).send(e);
@@ -52,7 +52,7 @@ app.get('/todos/:id', (req, res) => {
         if (!todo) {
             res.status(404).send();
         }
-        res.send({todo});
+        res.send({todo: todo});
     }).catch((e) => {
         res.status(400).send();
     })
@@ -75,7 +75,7 @@ app.delete('/todos/:id', (req, res) => {
             res.status(404).send();
         } 
         
-        res.status(200).send(todo);
+        res.status(200).send({todo: todo});
 
     }).catch((e) => {
         res.status(400).send();
